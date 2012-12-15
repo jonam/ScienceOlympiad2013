@@ -32,5 +32,9 @@ public class Topic {
    public Coach getCoach () {
      
     return coach;
+    
+   }
+   public boolean isBinderAllowed () {
+       return isBinderAllowed;
    }
 }
