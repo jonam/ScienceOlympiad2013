@@ -1,5 +1,9 @@
 package edu.redbasin.so.model;
 
+/**
+ * 
+ * @author tanisha
+ */
 public class ProjectTeam {
   private Topic topic;
   private Coach coach; 
