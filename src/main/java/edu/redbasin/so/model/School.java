@@ -3,6 +3,8 @@ package edu.redbasin.so.model;
 /**
  * @author Rohan
  * 
+ * Date Created: 12/12/2012
+ * 
  * School class
  * 
  * Fields:
