@@ -20,7 +20,6 @@ package edu.redbasin.so.model;
  *    -> Accessor for students
  * 
  */
-class Student{}
 
 public class School {
     /** A class representing the school. */
