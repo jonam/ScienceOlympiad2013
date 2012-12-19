@@ -1,6 +1,8 @@
 package edu.redbasin.so.model;
 
-//test
+/**
+ * placeholder
+ */
 public class EventSupervisor {
  
 }
