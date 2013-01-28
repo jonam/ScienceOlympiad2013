@@ -1,11 +1,14 @@
 package edu.redbasin.so.model;
 
+import java.util.List;
+
 /**
  * @author Rohan
  * 
  * Date Created: 12/12/2012
+ * Last Modification: 1/27/2013
  * 
- * School class
+ * Class School.
  * 
  * Fields:
  * -> name: String
@@ -22,16 +25,14 @@ package edu.redbasin.so.model;
  */
 
 public class School {
-    /** A class representing the school. */
-    private final String name; // Name of school
-    private final Student[] students; // List of students
+    private final String name;
+    private List<Student> students;
     // Constructor:
-    public School(String name, Student[] students) { 
-        // Constructor setting school's name and students
-        this.name = name; 
-        this.students = students;
-    }
+    public School(String name) { this.name = name; }
     // Accessor Methods:
     public String getName() { return name; }
-    public Student[] getStudents() {  return students; }
+    public List<Student> getStudents() { return students; }
+    // Mutator Methods:
+    public void addStudent(Student st) { students.add(st); }
+    public void addStudents(List<Student> sts) { students.addAll(sts); }
 }

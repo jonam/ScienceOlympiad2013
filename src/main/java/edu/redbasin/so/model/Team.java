@@ -1,83 +1,112 @@
 package edu.redbasin.so.model;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Rohan
  * 
- * Team class
+ * Date created: 12/12/2012
+ * Last modification: 1/27/2013
+ * 
+ * Class Team.
  * 
  * Fields:
- * -> name: String
- * -> committee: Committee
- * -> projectTeams: ProjectTeam[]
- * -> students: Student[]
- * -> schools: School[]
+ * -> builder: Team.Builder
  * 
  * Methods:
- * -> Team(String name, Committee committee, ProjectTeam[] projectTeams,
- *      Student[] students, School[] schools): Constructor
- * -> Team(String name, Committee committee, ProjectTeam[] projectTeams,
- *      Student[] students, School school): Constructor
- *      -> Constructor given a single school rather than an array
  * -> getName(): String
  *    -> Accessor for name
  * -> getCommittee(): Committee
  *    -> Accessor for committee
- * -> getProjectTeams(): ProjectTeam[]
+ * -> getProjectTeams(): List<ProjectTeam>
  *    -> Accessor for projectTeams
- * -> getSchools: School[]
+ * -> getSchools(): List<School>
  *    -> Accessor for schools
- * -> getStudents: Student[]
+ * -> getStudents(): List<Student>
  *    -> Accessor for students
+ * 
+ * Classes:
+ * -> Builder
+ *   Fields:
+ *   -> name: String
+ *   -> students: List<Student>
+ *   -> committee: Committee
+ *   -> projectTeams: List<projectTeam>
+ *   -> schools: List<School>
+ *   
+ *   Methods:
+ *   -> getName(): String
+ *     -> Accessor for name.
+ *   -> getCommittee(): Committee
+ *     -> Accessor for committee.
+ *   -> getProjectTeams(): List<ProjectTeam>
+ *     -> Accessor for projectTeams.
+ *   -> getSchools(): List<School>
+ *     -> Accessor for schools.
+ *   -> getStudents(): List<Student>
+ *     -> Accessor for students.
+ *   -> setName(String name)
+ *     -> Mutator for name.
+ *   -> addStudent(Student st)
+ *     -> Adds a student to list.
+ *   -> addStudents(List<Student> sts)
+ *     -> Appends a list of students to current list.
+ *   -> setCommittee(Committee committee)
+ *     -> Mutator for committee.
+ *   -> addProjectTeam(ProjectTeam pT)
+ *     -> Adds a projectTeam.
+ *   -> addProjectTeams(List<ProjecTeam> pTs)
+ *     -> Appends a list of projectTeams.
+ *   -> setSchools(List<School> schools)
+ *     -> Mutator for schools.
  * 
  */
 
-class Committee{}
-
 public class Team {
-    /** A class representing the team .
-     * Class designed to be immutable. */
-    private final String name;
-    private final Committee committee;
-    private final ProjectTeam[] projectTeams;
-    private final Student[] students;
-    private final School[] schools;
-    // Constructors:
-    public Team(String name, Committee committee, ProjectTeam[] projectTeams,
-            Student[] students, School[] schools) throws Exception {
-        // Constructor setting all fields
-        this.name = name;
-        this.committee = committee;
-        // Check that all students come from one of the schools:
-        // Add code here
-        this.students = students;
-        this.schools = schools;
-        // Check that project teams only include valid students
-        
-// Add code here
-        this.projectTeams = projectTeams;
-    }
-    public Team(String name, Committee committee, ProjectTeam[] projectTeams,
-            Student[] students, School school) throws Exception {
-        // Constructor given single school rather than array
-        School[] array = { school };
-        this.name = name;
-        this.committee = committee;
-        // Check that all students come from one of the schools:
-        for (Student st: students)
-            if (Arrays.binarySearch(school.getStudents(), 0, school.getStudents().length, st, null) == -1)
-                throw new Exception("All students must be from school.");            
-        this.students = students;
-        this.schools = array;
-        // Check that project teams only include valid students
-        // Add code here
-        this.projectTeams = projectTeams;
-    }
+    private final Builder builder;
+    public Team(Builder builder) { this.builder = builder; }
     // Accessors:
-    public String getName() { return name; }
-    public Committee getCommitee() { return committee; }
-    public ProjectTeam[] getProjectTeams() { return projectTeams; }
-    public Student[] getStudents() { return students; }
-    public School[] getSchools() { return schools; }
+    public String getName() { return builder.getName(); }
+    public Committee getCommittee() { return builder.getCommittee(); }
+    public List<ProjectTeam> getProjectTeams() { return builder.getProjectTeams(); }
+    public List<Student> getStudents() { return builder.getStudents(); }
+    public List<School> getSchools() { return builder.schools; } 
+    /** 
+     * A Builder Class.
+     * This class is mutable.
+     * Each immutable team is made by passing a builder.
+     * Then, the builder is set as a final attribute. 
+     * The only methods accessible by Team are the accessors.
+     */
+    public class Builder {
+        // Fields:
+        private String name;
+        private List<Student> students;
+        private Committee committee;
+        private List<ProjectTeam> projectTeams;
+        private List<School> schools;
+        // Accessors:
+        public String getName() { return name; }
+        public List<Student> getStudents() { return students; }
+        public Committee getCommittee() { return committee; }
+        public List<ProjectTeam> getProjectTeams() { return projectTeams; }
+        public List<School> getSchools() { return schools; }
+        // Mutators:
+        public void setName(String name) { this.name = name; }
+        public void addStudent(Student st) { students.add(st); }
+        public void addStudents(List<Student> sts) { students.addAll(sts); }
+        public void addCommitteeMember(Parent parent) 
+            { committee.addMember(parent); }
+        public void addProjectTeam(ProjectTeam pT) throws Exception {
+            outer: for (Student st : pT.getStudents()) {
+                for(School sch : schools)
+                    if (sch.getStudents().contains(st)) continue outer;
+                throw new Exception("All projectTeams must contain students from"
+                        + " a specified school.");
+            }
+        }
+        public void addProjectTeams(List<ProjectTeam> pTs) throws Exception 
+            { for (ProjectTeam pT: pTs) addProjectTeam(pT); }
+        public void setSchools(List<School> schools) { this.schools = schools; }
+    }
 }
