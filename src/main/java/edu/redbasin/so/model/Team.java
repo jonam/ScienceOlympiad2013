@@ -47,19 +47,14 @@ import java.util.List;
  *     -> Accessor for students.
  *   -> setName(String name)
  *     -> Mutator for name.
- *   -> addStudent(Student st)
- *     -> Adds a student to list.
- *   -> addStudents(List<Student> sts)
- *     -> Appends a list of students to current list.
- *   -> setCommittee(Committee committee)
- *     -> Mutator for committee.
+ *   -> setStudents(List<Student> sts)
+ *     -> Sets the original list of students.
  *   -> addProjectTeam(ProjectTeam pT)
  *     -> Adds a projectTeam.
  *   -> addProjectTeams(List<ProjecTeam> pTs)
  *     -> Appends a list of projectTeams.
  *   -> setSchools(List<School> schools)
  *     -> Mutator for schools.
- * 
  */
 
 public class Team {
@@ -82,7 +77,7 @@ public class Team {
         // Fields:
         private String name;
         private List<Student> students;
-        private Committee committee;
+        private Committee committee = new Committee();
         private List<ProjectTeam> projectTeams;
         private List<School> schools;
         // Accessors:
@@ -93,10 +88,7 @@ public class Team {
         public List<School> getSchools() { return schools; }
         // Mutators:
         public void setName(String name) { this.name = name; }
-        public void addStudent(Student st) { students.add(st); }
-        public void addStudents(List<Student> sts) { students.addAll(sts); }
-        public void addCommitteeMember(Parent parent) 
-            { committee.addMember(parent); }
+        public void setStudents(List<Student> sts) { students = sts; }
         public void addProjectTeam(ProjectTeam pT) throws Exception {
             outer: for (Student st : pT.getStudents()) {
                 for(School sch : schools)
@@ -107,6 +99,8 @@ public class Team {
         }
         public void addProjectTeams(List<ProjectTeam> pTs) throws Exception 
             { for (ProjectTeam pT: pTs) addProjectTeam(pT); }
+        public void setProjectTeams(List<ProjectTeam> pTs) 
+            { projectTeams = pTs; }
         public void setSchools(List<School> schools) { this.schools = schools; }
     }
 }

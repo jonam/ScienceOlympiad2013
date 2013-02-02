@@ -12,16 +12,21 @@ import java.util.List;
  * 
  * Fields:
  * -> name: String
- * -> students: Student[]
+ * -> students: List<Student>
  * 
  * Methods:
- * -> School(String name, Student[] students): constructor
- *    -> Set the school's name and array of students
+ * -> School(String name): constructor
+ *    -> Set the school's name
  * -> getName(): String
  *    -> Accessor for name
- * -> getStudents: Student[]
+ * -> getStudents: List<Student>
  *    -> Accessor for students
- * 
+ * -> addStudent(List<Student> st)
+ *   -> Adds a student to list of students.
+ * -> addStudents(List<Student> sts)
+ *   -> Appends a list of students to list.
+ * -> setStudents(List<Student> sts)
+ *   -> Sets the list attribute to the original list.
  */
 
 public class School {
@@ -35,4 +40,5 @@ public class School {
     // Mutator Methods:
     public void addStudent(Student st) { students.add(st); }
     public void addStudents(List<Student> sts) { students.addAll(sts); }
+    public void setStudents(List<Student> sts) { students = sts; }
 }
